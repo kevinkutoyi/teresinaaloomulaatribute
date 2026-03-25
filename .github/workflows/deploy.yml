@@ -1,0 +1,63 @@
+# =============================================================
+# .github/workflows/deploy.yml
+#
+# Deploys the tribute page to GitHub Pages.
+# Injects MY_GITHUB_TOKEN secret into config.js at build time
+# so the real token is NEVER stored in the repository.
+# =============================================================
+
+name: Deploy Tribute Page
+
+on:
+  push:
+    branches: [main] # runs on every push to main
+  workflow_dispatch: # allows manual trigger from GitHub UI
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Generate config.js from the template, injecting the secret token
+      - name: Generate config.js from template
+        env:
+          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+        run: |
+          sed "s|%%MY_GITHUB_TOKEN%%|${MY_GITHUB_TOKEN}|g" \
+              config.template.js > config.js
+          echo "config.js generated successfully (token injected, not logged)"
+
+      # 3. Verify config.js was created (token value is masked in logs)
+      - name: Verify config.js exists
+        run: |
+          if [ ! -f config.js ]; then
+            echo "ERROR: config.js was not generated!"
+            exit 1
+          fi
+          echo "config.js is present and ready for deployment"
+
+      # 4. Upload the site as a GitHub Pages artifact
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "." # upload entire repo root (index.html, style.css, index.js, config.js)
+
+      # 5. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Print deployed URL
+        run: echo "Deployed to ${{ steps.deployment.outputs.page_url }}"

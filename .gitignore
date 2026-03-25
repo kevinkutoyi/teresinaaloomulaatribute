@@ -1,0 +1,12 @@
+# ── Sensitive files — NEVER commit these ──
+config.js          # contains the real GitHub token locally
+.env
+.env.*
+*.pem
+secrets.*
+
+# ── OS / editor noise ──
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

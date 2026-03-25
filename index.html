@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>In Memoriam — A Space for Tributes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+
+  <!-- GITHUB STATUS BAR -->
+  <div class="gh-bar" id="gh-bar">
+    <div class="gh-bar-left">
+      <div class="gh-indicator" id="gh-indicator"></div>
+      <span id="gh-bar-label">Not connected to GitHub</span>
+      <span class="gh-bar-repo" id="gh-bar-repo"></span>
+    </div>
+    <div class="gh-bar-right">
+      <button class="gh-bar-btn" id="gh-pull-btn" onclick="pullFromGitHub()" title="Pull latest from GitHub">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Pull
+      </button>
+      <button class="gh-bar-btn" id="gh-push-btn" onclick="pushToGitHub()" title="Push all changes to GitHub">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Push
+      </button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+
+    <div class="candle-row">
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="candle-body"></div>
+        <div class="candle-base"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="candle-body" style="height:80px"></div>
+        <div class="candle-base"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="candle-body" style="height:48px"></div>
+        <div class="candle-base"></div>
+      </div>
+    </div>
+
+    <div class="hero-portrait-wrap">
+      <div class="hero-portrait-placeholder" id="portrait-display">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="30" r="18" fill="#c9a84c"/>
+          <path d="M8 72 C8 52 72 52 72 72" fill="#c9a84c"/>
+        </svg>
+      </div>
+      <label class="portrait-upload-label" for="portrait-input" title="Upload portrait photo"></label>
+      <div class="portrait-badge" onclick="document.getElementById('portrait-input').click()" title="Change photo">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0e0e0e" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+      </div>
+      <input type="file" id="portrait-input" accept="image/*"/>
+    </div>
+
+    <p class="hero-ornament">In Loving Memory</p>
+    <h2 class="memorial-name" id="memorial-name" onclick="editName()" title="Click to edit name">John Beloved Doe</h2>
+    <p class="memorial-years" id="memorial-years" onclick="editYears()" title="Click to edit years" style="cursor:pointer">1945 — 2024</p>
+
+    <h1 class="hero-title">A Place to<br><em>Remember</em></h1>
+    <p class="hero-subtitle">Light a candle. Leave your words. Let those who are gone know they are never forgotten.</p>
+    <div class="divider-line"></div>
+    <a href="#write" class="scroll-cta">
+      Leave a Tribute
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Memory Gallery -->
+    <div class="gallery-section">
+      <p class="section-label">Memory Gallery</p>
+      <div class="gallery-grid" id="gallery-grid">
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span>Memory</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span>Memory</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span>Memory</span>
+          </div>
+        </div>
+        <div class="gallery-item gallery-add">
+          <label for="gallery-input">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="16"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+            Add Photo
+          </label>
+          <input type="file" id="gallery-input" accept="image/*" multiple/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Write a Tribute -->
+    <div id="write">
+      <p class="section-label">Share Your Tribute</p>
+      <div class="tribute-form">
+        <h2 class="form-title">Leave your words</h2>
+        <p class="form-desc">Your tribute will be shared with all who visit this page. Write from the heart — no words are too small.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="e.g. Mary Kamau" maxlength="60"/>
+          </div>
+          <div class="form-group">
+            <label for="relation">Relationship</label>
+            <input type="text" id="relation" placeholder="e.g. Daughter, Friend, Colleague" maxlength="60"/>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label for="tribute">Your Tribute</label>
+          <textarea id="tribute" placeholder="Write your tribute here…" maxlength="600"></textarea>
+          <p class="char-count"><span id="count">0</span> / 600</p>
+        </div>
+        <button class="submit-btn" onclick="submitTribute()"><span>Post Tribute</span></button>
+      </div>
+    </div>
+
+    <!-- Tributes List -->
+    <div id="tributes-section">
+      <div class="tributes-header">
+        <p class="section-label" style="margin-bottom:0; flex:1">Tributes</p>
+        <p class="tribute-count" id="tribute-count">0 tributes shared</p>
+        <button class="sort-btn" onclick="toggleSort()" id="sort-btn">Newest First</button>
+      </div>
+      <div class="tributes-grid" id="tributes-grid">
+        <div class="empty-state" id="empty-state">
+          <div class="empty-state-icon">🕯</div>
+          <p>Be the first to leave a tribute.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Made with <span>♥</span> in remembrance — In Memoriam Tribute Page</p>
+  </footer>
+
+  <div class="toast" id="toast">Tribute posted — thank you</div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" title="Close">✕</button>
+    <button class="lightbox-nav prev" onclick="navigateLightbox(-1)" title="Previous">&#8249;</button>
+    <img id="lightbox-img" src="" alt="Memory photo"/>
+    <button class="lightbox-nav next" onclick="navigateLightbox(1)" title="Next">&#8250;</button>
+  </div>
+
+  <!-- config.js is git-ignored locally and generated by CI. Never commit it with a real token. -->
+  <script src="config.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
