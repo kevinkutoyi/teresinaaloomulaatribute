@@ -3,12 +3,12 @@ name: Deploy Tribute Page
 on:
   push:
     branches: [main]
-  workflow_dispatch: # allows manual trigger from GitHub
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
-  id-token: write # required for deploy-pages
+  id-token: write
 
 jobs:
   deploy:
@@ -21,29 +21,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # === TOKEN INJECTION ===
-      - name: Generate config.js from template (inject secret)
+      # ←←← THIS IS THE IMPORTANT PART ←←←
+      - name: Generate config.js (inject real token)
         run: |
           sed 's|%%MY_GITHUB_TOKEN%%|${{ secrets.MY_GITHUB_TOKEN }}|g' config.template.js > config.js
-          echo "config.js generated successfully (token injected)"
+          echo "✅ config.js generated with injected token"
 
-      # Optional: verify the file exists (token value is masked in logs)
-      - name: Verify config.js
-        run: |
-          ls -la config.js
-          echo "config.js is ready for deployment"
+      - name: Verify config.js exists
+        run: ls -la config.js
 
-      # === SETUP GITHUB PAGES ===
-      - name: Setup Pages
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      # === UPLOAD ARTIFACT ===
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "." # upload everything in the root (index.html, config.js, etc.)
+          path: "."
 
-      # === DEPLOY ===
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
