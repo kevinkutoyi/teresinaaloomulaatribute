@@ -30,6 +30,7 @@ jobs:
           text = text.replace('%%MY_GITHUB_TOKEN%%', os.environ['MY_GITHUB_TOKEN'])
           open('config.js', 'w').write(text)
           EOF
+          sed -i '/config\.js/d' .gitignore
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
