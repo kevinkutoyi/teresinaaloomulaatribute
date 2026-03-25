@@ -6,37 +6,30 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write # needed for this method
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate config.js (inject real token)
+      # Token injection (this part was already working in your logs)
+      - name: Generate config.js with real token
         run: |
           sed 's|%%MY_GITHUB_TOKEN%%|${{ secrets.MY_GITHUB_TOKEN }}|g' config.template.js > config.js
-          echo "✅ config.js generated with real token"
+          echo "✅ config.js generated successfully"
+          ls -la config.js index.html style.css index.js
 
-      - name: Verify files
-        run: ls -la index.html config.js style.css index.js
-
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "."
-
+      # Deploy using the classic (very stable) action
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages # creates/updates the gh-pages branch
+          force_orphan: true # keeps history clean
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
