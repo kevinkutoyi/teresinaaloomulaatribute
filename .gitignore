@@ -10,3 +10,4 @@ secrets.*
 Thumbs.db
 .vscode/
 .idea/
+config.js
