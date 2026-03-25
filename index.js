@@ -53,8 +53,8 @@ function saveYears(val)    { localStorage.setItem('memorialYears', val); }
 ══════════════════════════════════════════ */
 function buildSnapshot() {
   return {
-    memorialName:  localStorage.getItem('memorialName')  || 'John Beloved Doe',
-    memorialYears: localStorage.getItem('memorialYears') || '1945 — 2024',
+    memorialName:  localStorage.getItem('memorialName')  || 'Teresina Aloo Mulaa',
+    memorialYears: localStorage.getItem('memorialYears') || '1930 — 20th March 2026',
     portrait:      localStorage.getItem('portrait')      || null,
     tributes,
     galleryImages,
