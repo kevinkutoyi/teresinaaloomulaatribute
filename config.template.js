@@ -7,8 +7,8 @@
    ============================================================= */
 
 window.__TRIBUTE_CONFIG__ = {
-  token:  'MY_GITHUB_TOKEN',            // replaced by CI — do not edit
-  repo:   'kevinkutoyi/teresinaaloomulaa',   // ← update this to your repo
+  token:  '%%MY_GITHUB_TOKEN%%',            // replaced by CI — do not edit
+  repo:   'kevinkutoyi/teresinaaloomulaatribute',   // ← update this to your repo
   branch: 'main',
   path:   'data.json'
 };
