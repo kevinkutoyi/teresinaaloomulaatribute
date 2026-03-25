@@ -1,35 +1,9 @@
-name: Deploy Tribute Page
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
-permissions:
-  contents: write # needed for this method
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Token injection (this part was already working in your logs)
-      - name: Generate config.js with real token
+- name: Generate config.js
         run: |
-          sed 's|%%MY_GITHUB_TOKEN%%|${{ secrets.MY_GITHUB_TOKEN }}|g' config.template.js > config.js
-          echo "✅ config.js generated successfully"
-          ls -la config.js index.html style.css index.js
-
-      # Deploy using the classic (very stable) action
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          publish_branch: gh-pages # creates/updates the gh-pages branch
-          force_orphan: true # keeps history clean
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
+          python3 -c "
+          import sys
+          text = open('config.template.js').read()
+          text = text.replace('%%MY_GITHUB_TOKEN%%', '${{ secrets.MY_GITHUB_TOKEN }}')
+          open('config.js', 'w').write(text)
+          "
+          echo "✅ config.js generated"
