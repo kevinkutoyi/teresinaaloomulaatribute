@@ -21,14 +21,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ←←← THIS IS THE IMPORTANT PART ←←←
-      - name: Generate config.js (inject real token)
+      # Token Injection - Fixed version
+      - name: Generate config.js from template (inject secret)
         run: |
           sed 's|%%MY_GITHUB_TOKEN%%|${{ secrets.MY_GITHUB_TOKEN }}|g' config.template.js > config.js
-          echo "✅ config.js generated with injected token"
+          echo "✅ config.js successfully generated with real token injected"
 
-      - name: Verify config.js exists
-        run: ls -la config.js
+      - name: Verify config.js was created
+        run: |
+          ls -la config.js
+          head -n 10 config.js   # shows first 10 lines (token is masked in logs)
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
